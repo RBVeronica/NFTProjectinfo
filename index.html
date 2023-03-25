@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轉換</title>
+  <link rel="stylesheet" href="styles.css">
+  <h1>資料轉換程式</h1>
+</head>
+
+<body>
+    <div class="form-group">
+        <label>Collection ID</label>
+        <textarea></textarea>
+    </div>
+    <div class="form-group">
+        <label>Collection 描述</label>
+        <textarea></textarea>
+    </div>
+    <div class="form-group">
+        <label>NFT描述</label>
+        <textarea></textarea>
+    </div>
+    <div class="form-group">
+        <label>賦能內容</label>
+        <textarea></textarea>
+    </div>
+    <div class="form-group">
+        <label>使用說明</label>
+        <textarea></textarea>
+    </div>
+    <div class="form-group">
+        <label>注意事項</label>
+        <textarea></textarea>
+    </div>
+
+    <button onclick="exportCSV()">匯出CSV</button>
+
+    <script>
+        function convertText(text) {
+            return text.replaceAll('\n', '\\n');
+        }
+
+        function convertAllText() {
+            const allTextareas = document.querySelectorAll('.form-group textarea');
+            allTextareas.forEach(textarea => {
+                const originalText = textarea.value;
+                const convertedText = convertText(originalText);
+
+                const resultContainer = textarea.parentNode.querySelector('.converted_text') || document.createElement('div');
+                resultContainer.classList.add('converted_text');
+                resultContainer.textContent = convertedText;
+                textarea.parentNode.appendChild(resultContainer);
+            });
+        }
+
+        function exportCSV() {
+            convertAllText();
+
+            const allFields = document.querySelectorAll('.form-group');
+            const csvRows = [];
+            const headerRow = ['文字標題', '文字內容', '轉換後的文字內容'];
+            csvRows.push(headerRow.join(','));
+
+            allFields.forEach(field => {
+                const label = field.querySelector('label').innerText;
+                const originalText = field.querySelector('textarea').value;
+                const convertedTextElement = field.querySelector('.converted_text');
+                const convertedText = convertedTextElement ? convertedTextElement.innerText : '';
+
+                const row = [label, originalText, convertedText];
+                csvRows.push(row.map(column => `"${column.replace(/"/g, '""')}"`).join(','));
+            });
+
+            const csvString = csvRows.join('\n');
+            const blob = new Blob([csvString], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = url;
+            downloadLink.download = `資料轉換-${new Date().getTime()}.csv`;
+            document.body.appendChild(downloadLink);
+
+            downloadLink.click();
+
+            setTimeout(() => {
+                document.body.removeChild(downloadLink);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
+    </script>
+</body>
+</html>
