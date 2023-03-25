@@ -195,9 +195,15 @@ input[type="submit"]:hover, button:hover {
 
 @media screen and (max-width: 768px) {
   /* 在手機版視窗中隱藏導航選單 */
+  
   nav {
-    display: none;
+    display:none;
   }
+
+/* 當漢堡菜單被點選時，切換 nav 的顯示狀態 */
+.hamburger-menu.clicked + nav {
+  display: block;
+}
 
   /* 增加漢堡選單按鈕 */
   .hamburger {
@@ -278,10 +284,11 @@ input[type="submit"]:hover, button:hover {
     width: 100%;
   }
 }
+
 .hamburger-menu {
-  display: none;
+  display: block;
   position: fixed;
-  top: 0;
+  top: 30px; /* 調整成您需要的高度 */
   left: 0;
   z-index: 999;
   background: none;
@@ -289,6 +296,7 @@ input[type="submit"]:hover, button:hover {
   padding: 20px;
   cursor: pointer;
 }
+
 
 .hamburger-menu .line {
   display: block;
