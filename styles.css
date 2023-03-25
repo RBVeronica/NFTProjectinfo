@@ -193,7 +193,7 @@ input[type="submit"]:hover, button:hover {
 
 /* 在電腦版視窗中隱藏漢堡菜單 */
 @media screen and (min-width: 769px) {
-  .hamburger {
+  .hamburger-menu {
     display: none;
   }
 }
