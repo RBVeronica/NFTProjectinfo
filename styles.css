@@ -191,7 +191,12 @@ input[type="submit"]:hover, button:hover {
   padding-bottom: 0px;
 }
 
-
+/* 在電腦版視窗中隱藏漢堡菜單 */
+@media screen and (min-width: 769px) {
+  .hamburger {
+    display: none;
+  }
+}
 
 @media screen and (max-width: 768px) {
   /* 在手機版視窗中隱藏導航選單 */
@@ -288,7 +293,7 @@ input[type="submit"]:hover, button:hover {
 .hamburger-menu {
   display: block;
   position: fixed;
-  top: 30px; /* 調整成您需要的高度 */
+  top: 0px; /* 調整成您需要的高度 */
   left: 0;
   z-index: 999;
   background: none;
@@ -311,6 +316,5 @@ input[type="submit"]:hover, button:hover {
 .hamburger-menu .line:nth-child(2) {
   width: 20px;
 }
-
 
 
